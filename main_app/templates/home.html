@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <title>
+        Protfolio Maker - Home
+    </title>
+
+    <style>
+        * {
+            padding: 0%;
+            margin: 0%;
+        }
+
+        body {
+            background-color: #001523;
+            font-family: "poppins";
+        }
+
+        nav {
+            background-color: #00111c;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-inline: 2rem;
+            padding-block: 1rem;
+        }
+
+        nav .logo {
+            font-size: 2rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        nav .user {
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: .2rem;
+        }
+
+        nav .user .dp {
+            aspect-ratio: 1;
+            height: 1rem;
+            background-color: white;
+            border-radius: 50%;
+            background-size: cover;
+        }
+
+        .wrapper-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .wrapper-container .wrapper {
+            width: min(90%, 60rem);
+        }
+
+        .wrapper .head {
+            margin-top: 1rem;
+            display: flex;
+            color: #0097ff;
+            justify-content: space-between;
+            border-bottom: 1px solid #0097ff;
+            font-size: 1.5rem;
+            font-weight: 600;
+            align-items: end;
+            padding-block: .5rem;
+        }
+
+        .wrapper .head a {
+            font-size: 1.3rem;
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .portfolios {
+            display: flex;
+            flex-direction: column;
+            margin-top: 1rem;
+        }
+
+        .empty-portfolio{
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 4rem;
+            opacity: .5;
+        }
+
+        .empty-portfolio svg{
+            height: 10rem;
+            width: 10rem;
+        }
+
+        .empty-portfolio .txt{
+            color: #0097ff;
+            font-size: 2rem;
+            font-weight: 600;
+            text-align: center;
+            line-height: 2rem;
+
+            small{
+                font-weight: 400;
+                font-size: 1rem;
+            }
+        }
+
+        .portfolios:has(.portfolio) .empty-portfolio{
+                display: none;
+        }
+
+        .portfolios .portfolio {
+            background-color: #001a2c;
+            display: flex;
+            align-items: center;
+            padding: .8rem;
+            color: white;
+        }
+
+        .portfolios .portfolio .number {
+            padding-right: 2rem;
+        }
+
+        .portfolios .portfolio .name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            flex-grow: 1;
+        }
+
+        .portfolios .portfolio .functions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .portfolios .portfolio .functions button,
+        .portfolios .portfolio .functions a{
+            aspect-ratio: 1;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            background-color: transparent;
+            transition: background-color .3s;
+            
+            &:hover{
+                background-color: rgb(1, 147, 176);
+                border-radius: .3rem;
+            }
+            
+            abbr{
+                padding: 1rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            svg{
+                height: 1.5rem;
+                width: 1.5rem;
+            }
+        }
+
+        @media (max-width:850px) {
+            .portfolios .portfolio {
+                background-color: #001a2c;
+                display: flex;
+                align-items: center;
+                padding: .8rem;
+                color: white;
+                flex-wrap: wrap;
+            }
+    
+            .portfolios .portfolio .functions {
+                display: flex;
+                flex: 1;
+                gap: 0rem;
+                justify-content: space-evenly;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="logo">portfolio maker</div>
+        <div class="user">
+            Hello, {{user}}
+            <div class="dp"></div>
+        </div>
+    </nav>
+    <div class="wrapper-container">
+        <div class="wrapper">
+            <div class="head">
+                <div class="txt">My Portfolios</div>
+                <a href="{% url 'new_porfolio' %}">+ Create Protfolio</a>
+            </div>
+            <div class="portfolios">
+                <div class="empty-portfolio">
+                    <svg width="280" height="280" viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <rect width="280" height="280" fill="url(#pattern0_3_42)"/>
+                        <defs>
+                        <pattern id="pattern0_3_42" patternContentUnits="objectBoundingBox" width="1" height="1">
+                        <use xlink:href="#image0_3_42" transform="scale(0.00357143)"/>
+                        </pattern>
+                        <image id="image0_3_42" width="280" height="280" xlink:href="data:image/png;base64,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"/>
+                        </defs>
+                        </svg>
+                        <div class="txt">
+                            You have no Portfolio <br>
+                            <small>Click above “<b>+ Create Porfolio</b>” Create one</small>
+                        </div>
+                </div>
+                
+                {% for portfolio in portfolios %}
+                <div class="portfolio">
+                    <div class="number">1.</div>
+                    <div class="name">{{portfolio.name}}</div>
+                    <div class="functions">
+
+                        <button>
+                            <abbr title="Copy link">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                                fill="#e8eaed">
+                                <path
+                                    d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z" />
+                            </svg>
+                            </abbr>
+                        </button>
+                        
+                        <a href="{% url 'view_portfolio' portfolio.id %}">
+                            <abbr title="Open">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                                fill="#e8eaed">
+                                <path
+                                    d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z" />
+                            </svg>
+                        </abbr>
+                        </a>
+                        <button>
+                            <abbr title="Edit">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                                fill="#e8eaed">
+                                <path
+                                    d="M160-400v-80h280v80H160Zm0-160v-80h440v80H160Zm0-160v-80h440v80H160Zm360 560v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q8 9 12.5 20t4.5 22q0 11-4 22.5T863-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
+                            </svg>
+                        </abbr>
+                        </button>
+                        <button>
+                            <abbr title="Delete">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                                fill="#e8eaed">
+                                <path
+                                    d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
+                            </svg>
+                        </abbr>
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

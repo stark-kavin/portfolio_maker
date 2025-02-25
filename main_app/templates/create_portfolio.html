@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Portfolio</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'create_portfolio.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+</head>
+
+<body>
+    <div class="wrapper-container">
+        <div class="wrapper">
+            <div class="main-head">
+                <a href="{% url 'home' %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                        fill="#e8eaed">
+                        <path d="M640-80 240-480l400-400 71 71-329 329 329 329-71 71Z" />
+                    </svg>
+                </a>
+                <div class="txt">Create Portfolio</div>
+                <div class="filler"></div>
+            </div>
+            <form id="form" enctype="multipart/form-data">
+                {% csrf_token %}
+            
+                <div class="inp-grp req" data-error="0">
+                    <label for="p-name">Portfolio Name</label>
+                    <input type="text" required minlength="3" maxlength="30" name="p-name" id="p-name">
+                    <div class="error">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#e8eaed">
+                            <path
+                                d="M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm-40-160h80v-240h-80v240Zm40 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z" />
+                        </svg>
+                        This field is required.(3-30 character)
+                    </div>
+                </div>
+                <div class="inp-grp req" data-error="0">
+                    <label for="f-name">Full Name</label>
+                    <input type="text" required minlength="3" maxlength="30" name="f-name" id="f-name">
+                    <div class="error">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#e8eaed">
+                            <path
+                                d="M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm-40-160h80v-240h-80v240Zm40 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z" />
+                        </svg>
+                        This field is required.(3-30 character)
+                    </div>
+                </div>
+                <div class="inp-grp" data-error="0">
+                    <label for="imageinp">Image</label>
+                    <div class="image-display-container" id="image-display-container">
+                        <div class="image-display" id="image-display" style="background-image: url('');"></div>
+                    </div>
+                    <input type="file" id="imageinp" onchange="handleImageUpload()" accept="image/*">
+                    <div class="error">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#e8eaed">
+                            <path
+                                d="M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm-40-160h80v-240h-80v240Zm40 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z" />
+                        </svg>
+                        Images only alloweded.
+                    </div>
+                </div>
+
+                <div class="inp-grp req" data-error="0">
+                    <label for="">Roles (Add 1 to 4 roles)</label>
+                    <div class="roles-container" id="rolesContainer">
+                        <div class="empty-role">
+                            No Roles are entered
+                        </div>
+                        <!-- <div class="role">
+                            <div class="txt">Developer</div>
+                            <button>X</button>
+                        </div> -->
+                    </div>
+                    <div class="inline-input">
+                        <input type="text" id="roleInput"
+                            placeholder="Web developer (or) Java developer (or) UX/UI developer...">
+                        <button type="button" onclick="createRoleElement()">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                                fill="#e8eaed">
+                                <path
+                                    d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="error">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#e8eaed">
+                            <path
+                                d="M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm-40-160h80v-240h-80v240Zm40 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z" />
+                        </svg>
+                        You need at least one role.
+                    </div>
+                </div>
+
+                <div class="inp-grp" data-error="0">
+                    <label for="linkedin">Linkedin URL</label>
+                    <input name="linkedin" id="linkedin" type="url" maxlength="100" minlength="3">
+                    <div class="error">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#e8eaed">
+                            <path
+                                d="M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm-40-160h80v-240h-80v240Zm40 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z" />
+                        </svg>
+                        This field is required.(3-30 character)
+                    </div>
+                </div>
+
+                <div class="inp-grp" data-error="0">
+                    <label for="github">Github URL</label>
+                    <input id="github" name="github" type="url" maxlength="100" minlength="3">
+                    <div class="error">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#e8eaed">
+                            <path
+                                d="M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm-40-160h80v-240h-80v240Zm40 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z" />
+                        </svg>
+                        Enter a valid URL
+                    </div>
+                </div>
+
+                <div class="inp-grp" data-error="0">
+                    <label for="twitter">X.com (Twitter)</label>
+                    <input name="twitter" id="twitter" type="url" maxlength="100" minlength="3">
+                    <div class="error">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#e8eaed">
+                            <path
+                                d="M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm-40-160h80v-240h-80v240Zm40 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z" />
+                        </svg>
+                        Enter a valid URL
+                    </div>
+                </div>
+
+                <div class="inp-grp" data-error="0">
+                    <label for="insta">Instagram</label>
+                    <input name="insta" id="insta" type="url" maxlength="100" minlength="3">
+                    <div class="error">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#e8eaed">
+                            <path
+                                d="M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm-40-160h80v-240h-80v240Zm40 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z" />
+                        </svg>
+                        Enter a valid URL
+                    </div>
+                </div>
+
+                <div class="inp-grp req" data-error="0">
+                    <label for="about">About you (30 to 150 characters)</label>
+                    <textarea name="about" id="about" minlength="30" maxlength="150" required></textarea>
+                    <div class="error">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#e8eaed">
+                            <path
+                                d="M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm-40-160h80v-240h-80v240Zm40 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z" />
+                        </svg>
+                        Field requires 30 to 150 characters
+                    </div>
+                </div>
+
+                <div class="inp-grp req" data-error="0">
+                    <label for="title">Title</label>
+                    <input type="text" name="title" id="title" required minlength="3" maxlength="30">
+                    <div class="error">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#e8eaed">
+                            <path
+                                d="M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm-40-160h80v-240h-80v240Zm40 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z" />
+                        </svg>
+                        Field requires 3 to 30 characters
+                    </div>
+                </div>
+
+                <div class="inp-grp req" data-error="0">
+                    <label for="dob">Date of birth</label>
+                    <input type="date" name="dob" id="dob" required>
+                    <div class="error">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#e8eaed">
+                            <path
+                                d="M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm-40-160h80v-240h-80v240Zm40 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z" />
+                        </svg>
+                        Field is required
+                    </div>
+                </div>
+
+                <div class="inp-grp req" data-error="0">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" minlength="5" maxlength="255" id="email" required>
+                    <div class="error">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#e8eaed">
+                            <path
+                                d="M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm-40-160h80v-240h-80v240Zm40 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z" />
+                        </svg>
+                        Field is required
+                    </div>
+                </div>
+
+                <div class="inp-grp req" data-error="0">
+                    <label for="phone">Phone</label>
+                    <input type="tel" maxlength="10" minlength="10" name="phone" id="phone" required>
+                    <div class="error">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#e8eaed">
+                            <path
+                                d="M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm-40-160h80v-240h-80v240Zm40 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z" />
+                        </svg>
+                        Field is required. (10 characters only)
+                    </div>
+                </div>
+
+                <div class="inp-grp req" data-error="0">
+                    <label for="city">City</label>
+                    <input type="text" name="city" minlength="3" maxlength="50" id="city" required>
+                    <div class="error">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#e8eaed">
+                            <path
+                                d="M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm-40-160h80v-240h-80v240Zm40 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z" />
+                        </svg>
+                        Field is required
+                    </div>
+                </div>
+
+                <div class="inp-grp req" data-error="0">
+                    <label for="">Skills</label>
+                    <div class="skill-container">
+                        <div class="empty-skill">No skills are entered</div>
+                    </div>
+                    
+                    <div class="inline-input">
+                        <select id="skilllevelinp">
+                            <option value="Beginner">Beginner</option>
+                            <option value="Intermidiate">Intermidiate</option>
+                            <option value="Advanced">Advanced</option>
+                        </select>
+                        <input type="text" id="skillnameinp" placeholder="Skill">
+                        <button onclick="addSkill()" type="button"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                width="24px" fill="#e8eaed">
+                                <path
+                                    d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z" />
+                            </svg></button>
+                    </div>
+                    <div class="error">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#e8eaed">
+                            <path
+                                d="M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm-40-160h80v-240h-80v240Zm40 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z" />
+                        </svg>
+                        At least one skill is required.
+                    </div>
+                </div>
+
+                <div class="inp-grp req" data-error="0">
+                    <label for="">Education</label>
+                    <div class="education-container" id="education-container">
+                        <div class="empty-education">No education details are entered</div>
+                    </div>
+                
+                    <div class="inline-input">
+                        <input type="text" id="institutioninp" placeholder="Institution">
+                        <input type="text" id="yearinp" placeholder="Year Ex:2022-2025">
+                        <input type="text" id="degreeinp" placeholder="Degree or Course">
+                        <button type="button" onclick="addEducation()" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+                                <path
+                                    d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="error">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#e8eaed">
+                            <path
+                                d="M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm-40-160h80v-240h-80v240Zm40 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z" />
+                        </svg>
+                        Atleast one education required
+                    </div>
+                </div>
+                
+                <button id="submit-btn" type="submit">SUBMIT</button>
+
+            </form>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="{% static 'create-pf.js' %}" defer></script>
+    <script defer>
+
+        const toast = new Notyf({duration: 3000});
+
+        function createRoleElement() {
+
+            const roleInp = document.getElementById("roleInput");
+            let roleText = roleInp.value;
+            roleInp.value = "";
+            roleInp.focus();
+
+            if (document.querySelectorAll(".role").length >= 4) {
+                toast.error("reached max roles");
+                return
+            }
+
+            const trimmedText = roleText.replace(/\s/g, "");
+            if (trimmedText.length < 3 || trimmedText.length > 30) {
+                toast.error("Role must be between 3 and 30 characters (excluding spaces).");
+                return;
+            }
+
+            // Create div with class "role"
+            const roleDiv = document.createElement("div");
+            roleDiv.classList.add("role");
+
+            // Create div with class "txt" and set text content
+            const txtDiv = document.createElement("div");
+            txtDiv.classList.add("txt");
+            txtDiv.textContent = roleText;
+
+            // Create hidden input
+            const hiddenInput = document.createElement("input");
+            hiddenInput.type = "hidden";
+            hiddenInput.name = "role";
+            hiddenInput.value = roleText;
+
+            // Create button with "X" text
+            const button = document.createElement("button");
+            button.textContent = "X";
+            button.type = "button";
+
+            // Add event listener to remove the role div on button click
+            button.addEventListener("click", function () {
+                roleDiv.remove();
+            });
+
+            // Append text div, hidden input, and button to role div
+            roleDiv.appendChild(txtDiv);
+            roleDiv.appendChild(hiddenInput);
+            roleDiv.appendChild(button);
+
+            // Append role div to the body or a specific container
+            document.getElementById("rolesContainer").append(roleDiv);
+        }
+
+        function addSkill() {
+            console.log("HI")
+            let name = document.getElementById("skillnameinp").value.trim();
+            let level = document.getElementById("skilllevelinp").value.trim();
+        
+            // Validation: Check if name length is between 3 and 30 characters
+            if (name.length < 3 || name.length > 30) {
+                toast.error("Skill name must be between 3 and 30 characters long.");
+                return;
+            }
+        
+            // Create skill container
+            const skill = document.createElement("div");
+            skill.classList.add("skill");
+        
+            // Create skill body
+            const skillBody = document.createElement("div");
+            skillBody.classList.add("skill-body");
+        
+            // Create name element
+            const skillName = document.createElement("div");
+            skillName.classList.add("name");
+            skillName.textContent = name;
+        
+            // Create level element
+            const skillLevel = document.createElement("div");
+            skillLevel.classList.add("level");
+            skillLevel.textContent = level;
+        
+            // Append name & level to skill body
+            skillBody.appendChild(skillName);
+            skillBody.appendChild(skillLevel);
+        
+            // Create hidden input for skill name
+            const hiddenSkill = document.createElement("input");
+            hiddenSkill.type = "hidden";
+            hiddenSkill.name = "skill_name[]";
+            hiddenSkill.value = name;
+        
+            // Create hidden input for skill level
+            const hiddenLevel = document.createElement("input");
+            hiddenLevel.type = "hidden";
+            hiddenLevel.name = "skill_level[]";
+            hiddenLevel.value = level;
+        
+            // Create delete button
+            const deleteButton = document.createElement("button");
+            deleteButton.classList.add("skill-del");
+            deleteButton.textContent = "✖";
+        
+            // Delete button event listener
+            deleteButton.addEventListener("click", () => {
+                skill.remove();
+            });
+        
+            // Append elements to skill container
+            skill.appendChild(skillBody);
+            skill.appendChild(deleteButton);
+            skill.appendChild(hiddenSkill);
+            skill.appendChild(hiddenLevel);
+        
+            document.querySelector(".skill-container").appendChild(skill);
+        
+            document.getElementById("skillnameinp").value = "";
+        }
+        
+        function addEducation() {
+
+            let degree = document.getElementById("degreeinp").value
+            let year = document.getElementById("yearinp").value
+            let institution = document.getElementById("institutioninp").value
+
+            function validateInput(input) {
+                return input.length >= 3 && input.length <= 60;
+            }
+
+            if (!validateInput(degree) || !validateInput(year) || !validateInput(institution)) {
+                toast.error("Each field must be between 3 and 60 characters.");
+                return;
+            }
+        
+            const container = document.getElementById("education-container");
+            const educationDiv = document.createElement("div");
+            educationDiv.classList.add("education");
+        
+            educationDiv.innerHTML = `
+                <div class="education-body">
+                    <div class="degree">${degree} <span class="year">${year}</span></div>
+                    <div class="institution">${institution}</div>
+                    <input type="hidden" name="degree[]" value="${degree}">
+                    <input type="hidden" name="year[]" value="${year}">
+                    <input type="hidden" name="college[]" value="${institution}">
+                </div>
+                <button type="button" class="remove-btn">x</button>
+            `;
+        
+            container.appendChild(educationDiv);
+        
+            educationDiv.querySelector(".remove-btn").addEventListener("click", function () {
+                container.removeChild(educationDiv);
+            });
+
+            document.getElementById("degreeinp").value = ""
+            document.getElementById("yearinp").value = ""
+            document.getElementById("institutioninp").value = ""
+
+        }
+
+        function handleImageUpload() {
+            const input = document.getElementById("imageinp") 
+            const allowedFormats = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+            const file = input.files[0];
+            const preview = document.getElementById("image-display");
+            
+            if (file) {
+                if (allowedFormats.includes(file.type)) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        preview.style.backgroundImage = `url('${e.target.result}')`;
+                        document.getElementById("image-display-container").style.display = "flex";
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    input.value = ""; // Clear the input field
+                    document.getElementById("image-display-container").style.display = "none";
+                    toast.error("Invalid file format! Please select a JPEG, PNG, GIF, or WebP image.");
+                }
+            }
+        }
+
+    </script>
+</body>
+
+</html>
